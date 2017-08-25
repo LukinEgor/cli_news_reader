@@ -1,6 +1,8 @@
 require './src/hacker_news'
 require './src/reader'
 require './src/command'
+require 'io/console'
+require './src/keyboard'
 
 sources = Array.new
 sources.push(HackerNews.new)
@@ -11,25 +13,11 @@ sources.push(HackerNews.new)
 
 reader = Reader.new(sources)
 
-@keyboard_queue = Queue.new
-
-#TODO don't work listening keyboard
-Thread.new { listen_keyboard }
-
-loop do
-  unless @keyboard_queue.empty?
-    input = @keyboard_queue.shift
-    puts input
-    command = Command.new(input)
-    reader.exec(command)
+Keyboard.listen do |input|
+  if input == "\u0003"
+    puts "CONTROL-C"
+    exit 0
   end
-end
-
-def listen_keyboard
-  puts "run"
-  loop do
-    char = STDIN.getc
-    @keyboard_queue << char if char
-    puts char
-  end
+  command = Command.new(input)
+  reader.exec(command)
 end

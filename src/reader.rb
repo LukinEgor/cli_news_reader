@@ -11,7 +11,7 @@ class Reader
   end
 
   def exec(command)
-    call(command.action)
+    self.method(command.action).call
   end
 
   private
@@ -53,7 +53,7 @@ class Reader
     end
   end
 
-  def method_missing
-    p "method_missing"
+  def nothing
+    puts "this action don't work"
   end
 end
