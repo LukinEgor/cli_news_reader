@@ -42,6 +42,7 @@ class Reader
   def back
     if @state == :source
       @state = :main
+      @cursor.max = @sources.size - 1
       render
     end
   end
