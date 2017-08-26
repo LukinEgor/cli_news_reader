@@ -4,9 +4,11 @@ require './src/cursor'
 class Reader
   def initialize(sources)
     @sources = sources
+
+    #TODO think about state machine
     @state = :main
     @cursor = Cursor.new
-    @cursor.max = sources.size
+    @cursor.max = sources.size - 1
     render
   end
 
@@ -29,10 +31,12 @@ class Reader
 
   def up
     @cursor.up
+    render
   end
 
   def down
     @cursor.down
+    render
   end
 
   def back
@@ -45,11 +49,11 @@ class Reader
   def open
     if @state == :main
       @state = :source
-      @articles = @sources[@cursor].articles(0..10)
-      @cursor.max = @articles.size
+      @articles ||= @sources[@cursor.position].articles(0..10)
+      @cursor.max = @articles.size - 1
       render
     elsif @state == :source
-      #open browser
+      system "chromium #{@articles[@cursor.position].link}"
     end
   end
 

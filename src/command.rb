@@ -13,6 +13,8 @@ class Command
       :open
     when 'p'
       :back
+    when 'q'
+      exit 0
     else
       :nothing
     end
