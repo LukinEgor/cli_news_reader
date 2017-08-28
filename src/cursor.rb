@@ -7,21 +7,20 @@ class Cursor
 
   def max=(max)
     @max = max
-    @position = 0
   end
 
-  def up
-    if @position == @max
-      @position = 0
-    else
+  def max?
+    @position == @max
+  end
+
+  def down
+    if @position != @max
       @position += 1
     end
   end
 
-  def down
-    if @position == 0
-      @position = @max
-    else
+  def up
+    if @position != 0
       @position -= 1
     end
   end

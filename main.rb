@@ -13,6 +13,6 @@ sources.push(HackerNews.new)
 reader = Reader.new(sources)
 
 Keyboard.new.listen do |input|
-  command = Command.new(input)
-  reader.exec(command)
+  action = Command.new(input).action
+  reader.exec(action)
 end
