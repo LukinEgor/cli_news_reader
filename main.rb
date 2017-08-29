@@ -3,7 +3,7 @@ require './src/reader'
 require './src/command'
 require './src/keyboard'
 
-sources = Array.new
+sources = []
 sources.push(HackerNews.new)
 sources.push(HackerNews.new)
 sources.push(HackerNews.new)
