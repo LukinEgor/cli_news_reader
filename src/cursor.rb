@@ -1,27 +1,44 @@
+require './src/point'
+
 class Cursor
+  attr_accessor :max_x, :max_y
   attr_reader :position
 
   def initialize
-    @position = 0
+    @position = Point.new
+    @max_x = 0
+    @max_y = 0
   end
 
-  def max=(max)
-    @max = max
+  def max_x?
+    @position.x == @max_x
   end
 
-  def max?
-    @position == @max
+  def max_y?
+    @position.y == @max_y
   end
 
   def down
-    if @position != @max
-      @position += 1
+    if @position.y != @max_y
+      @position.y += 1
     end
   end
 
   def up
-    if @position != 0
-      @position -= 1
+    if @position.y != 0
+      @position.y -= 1
+    end
+  end
+
+  def left
+    if @position.x != 0
+      @position.x -= 1
+    end
+  end
+
+  def right
+    if @position.x != @max_x
+      @position.x += 1
     end
   end
 end

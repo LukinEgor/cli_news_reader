@@ -32,7 +32,11 @@ class HackerNews
 
   def json_by_url(url)
     uri = URI(url)
-    res = Net::HTTP.get(uri)
-    JSON.parse(res)
+    begin
+      res = Net::HTTP.get(uri)
+      JSON.parse(res)
+    rescue
+      []
+    end
   end
 end

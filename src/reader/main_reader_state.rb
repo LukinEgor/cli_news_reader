@@ -8,7 +8,8 @@ class MainReaderState < ReaderState
   def initialize(sources)
     @sources = sources
     @cursor = Cursor.new
-    @cursor.max = sources.size - 1
+    @cursor.max_x = word_count
+    @cursor.max_y = sources.size - 1
     render
   end
 
@@ -27,15 +28,33 @@ class MainReaderState < ReaderState
 
   def up
     @cursor.up
+    @cursor.max_x = word_count
     render
   end
 
   def down
     @cursor.down
+    @cursor.max_x = word_count
     render
   end
 
+  def left
+    @cursor.left
+    render
+  end
+
+  def right
+    @cursor.right
+    render
+  end
+
+  def word_count
+    content[@cursor.position.y].split(' ').size
+  end
+
   def render
-    Console.render(content, @cursor.position, { info: "Select source" })
+    info_line = { info: "Select source" }
+    cursor_mode = { mode: :line }
+    Console.render(content, @cursor.position, info_line.merge(cursor_mode))
   end
 end

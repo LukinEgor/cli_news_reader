@@ -13,8 +13,15 @@ class Command
       :open
     when 'p'
       :back
-    # when 'q'
-      # exit 0
+    when 'h'
+      :left
+    when 'l'
+      :right
+    when 't'
+      :translate
+    when 'q', "\u0003"
+      Keyboard.reset_tty_params
+      exit 0
     else
       :nothing
     end

@@ -2,7 +2,16 @@ require 'io/console'
 
 class Keyboard
   def initialize
+    Keyboard.set_tty_params
+  end
+
+  def self.set_tty_params
     system 'stty raw -echo'
+  end
+
+  def self.reset_tty_params
+    system 'stty raw echo'
+    system 'stty cooked'
   end
 
   def listen
@@ -11,7 +20,6 @@ class Keyboard
     loop do
       unless @@queue.empty?
         input = @@queue.shift
-        handle_ctrl_keys(input)
         yield(input)
       end
     end
@@ -29,15 +37,6 @@ class Keyboard
         end
         @@queue << input.rstrip
       end
-    end
-  end
-
-  def handle_ctrl_keys(input)
-    case input
-    when "\u0003" #ctrl-c
-      system 'stty raw echo'
-      system 'stty cooked'
-      exit 0
     end
   end
 end

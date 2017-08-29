@@ -12,8 +12,8 @@ class NewsFeedContainer
   def load
     @page += 1
     from = (@page - 1) * ARTICLES_ON_PAGE
-    to = @page * ARTICLES_ON_PAGE -  1
-    new_articles = @source.articles(from..to)
+    to = @page * ARTICLES_ON_PAGE
+    new_articles = @source.articles(from...to)
     @articles.concat(new_articles)
   end
 
